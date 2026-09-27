@@ -1,95 +1,448 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SmashByte - Game Development</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://kit.fontawesome.com/0ef927398d.js" crossorigin="anonymous"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SmashByte | Game Studio</title>
+  <meta name="description" content="SmashByte is a Brazilian game studio that builds and operates online games. Our first title, Alaria Online, launched in September 2026.">
+  <link rel="canonical" href="https://smashbyte.com.br/">
+  <link rel="icon" href="logo.jpg">
+  <meta name="theme-color" content="#0b0b0d">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="SmashByte">
+  <meta property="og:title" content="SmashByte | Game Studio">
+  <meta property="og:description" content="A Brazilian game studio that builds and operates online games. Our first title, Alaria Online, launched in September 2026.">
+  <meta property="og:url" content="https://smashbyte.com.br/">
+  <meta property="og:image" content="https://smashbyte.com.br/logo.jpg">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "SmashByte",
+    "url": "https://smashbyte.com.br",
+    "logo": "https://smashbyte.com.br/logo.jpg",
+    "email": "support@smashbyte.com.br",
+    "address": { "@type": "PostalAddress", "addressCountry": "BR" },
+    "sameAs": [
+      "https://www.instagram.com/alariaonline",
+      "https://www.twitch.tv/alariaonline",
+      "https://discord.gg/vvD5pQwB7F"
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #0b0b0d;
+      --bg-2: #121216;
+      --surface: #17171c;
+      --border: #26262e;
+      --text: #ededf0;
+      --muted: #9b9ba6;
+      --accent: #ff6a1a;
+      --accent-2: #ffb347;
+      --live: #3ddc84;
+      --radius: 14px;
+      --max: 1140px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font: 16px/1.6 "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; height: auto; }
+    h1, h2, h3 { font-family: "Space Grotesk", "Inter", sans-serif; line-height: 1.15; letter-spacing: -0.02em; }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+    section { padding: 96px 0; border-top: 1px solid var(--border); }
+    .eyebrow {
+      display: inline-block; font-size: 13px; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 16px;
+    }
+    .section-head { max-width: 680px; margin-bottom: 48px; }
+    .section-head h2 { font-size: clamp(28px, 4vw, 40px); margin-bottom: 16px; }
+    .section-head p { color: var(--muted); font-size: 18px; }
+
+    /* Nav */
+    .nav {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(11, 11, 13, 0.8); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 68px; gap: 24px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 19px; }
+    .brand img { width: 34px; height: 34px; border-radius: 8px; object-fit: cover; }
+    .nav-links { display: flex; align-items: center; gap: 28px; font-size: 15px; color: var(--muted); }
+    .nav-links a:hover { color: var(--text); }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+    .lang {
+      display: flex; border: 1px solid var(--border); border-radius: 999px; overflow: hidden; font-size: 12px; font-weight: 600;
+    }
+    .lang button {
+      background: none; border: 0; color: var(--muted); padding: 6px 10px; cursor: pointer; font: inherit;
+    }
+    .lang button[aria-pressed="true"] { background: var(--surface); color: var(--text); }
+    .menu-btn { display: none; background: none; border: 1px solid var(--border); color: var(--text); border-radius: 8px; padding: 6px 10px; cursor: pointer; font-size: 18px; line-height: 1; }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 10px;
+      font-weight: 600; font-size: 15px; transition: transform .15s, background .15s, border-color .15s;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary { background: var(--accent); color: #140800; }
+    .btn-primary:hover { background: #ff7d38; }
+    .btn-ghost { border: 1px solid var(--border); color: var(--text); }
+    .btn-ghost:hover { border-color: #3a3a44; background: var(--surface); }
+    .btn-sm { padding: 8px 14px; font-size: 14px; }
+
+    /* Hero */
+    .hero { border-top: 0; padding: 120px 0 104px; position: relative; overflow: hidden; }
+    .hero::before {
+      content: ""; position: absolute; inset: -20% -10% auto auto; width: 700px; height: 700px;
+      background: radial-gradient(closest-side, rgba(255, 106, 26, 0.18), transparent 70%);
+      pointer-events: none;
+    }
+    .hero .wrap { display: grid; grid-template-columns: 1.2fr 1fr; gap: 64px; align-items: center; position: relative; }
+    .hero h1 { font-size: clamp(38px, 6vw, 64px); margin-bottom: 24px; }
+    .hero h1 em { font-style: normal; color: var(--accent); }
+    .hero p.lead { font-size: 19px; color: var(--muted); max-width: 560px; margin-bottom: 36px; }
+    .hero-ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+    .hero-card {
+      background: linear-gradient(180deg, var(--surface), var(--bg-2));
+      border: 1px solid var(--border); border-radius: 20px; padding: 32px; text-align: center;
+    }
+    .hero-card img { width: 100%; max-width: 300px; margin: 0 auto 20px; }
+    .status {
+      display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600;
+      padding: 6px 12px; border-radius: 999px; background: rgba(61, 220, 132, 0.1); color: var(--live);
+      border: 1px solid rgba(61, 220, 132, 0.25);
+    }
+    .status::before {
+      content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--live);
+      box-shadow: 0 0 0 0 rgba(61, 220, 132, .6); animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 70% { box-shadow: 0 0 0 8px rgba(61, 220, 132, 0); } 100% { box-shadow: 0 0 0 0 rgba(61, 220, 132, 0); } }
+    @media (prefers-reduced-motion: reduce) { .status::before { animation: none; } html { scroll-behavior: auto; } }
+
+    /* Cards grid */
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+    .card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px;
+    }
+    .card .icon {
+      width: 44px; height: 44px; border-radius: 10px; display: grid; place-items: center;
+      background: rgba(255, 106, 26, 0.12); color: var(--accent); margin-bottom: 20px;
+    }
+    .card h3 { font-size: 19px; margin-bottom: 10px; }
+    .card p { color: var(--muted); font-size: 15px; }
+
+    /* Product */
+    .product { display: grid; grid-template-columns: 1fr 1.1fr; gap: 56px; align-items: center; }
+    .product-visual { background: #fcf4c7; border: 1px solid var(--border); border-radius: 20px; overflow: hidden; }
+    .product-visual img { width: 100%; max-width: 480px; margin: 0 auto; }
+    .product h3 { font-size: 32px; margin: 12px 0 16px; }
+    .product > div > p { color: var(--muted); font-size: 17px; margin-bottom: 28px; }
+    .facts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 28px; }
+    .facts div { background: var(--surface); padding: 16px 18px; }
+    .facts dt { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 4px; }
+    .facts dd { font-weight: 600; }
+    .socials { display: flex; gap: 10px; margin-top: 20px; }
+    .socials a {
+      width: 40px; height: 40px; display: grid; place-items: center; border-radius: 10px;
+      border: 1px solid var(--border); color: var(--muted);
+    }
+    .socials a:hover { color: var(--text); border-color: #3a3a44; }
+
+    .quote { border-left: 3px solid var(--accent); padding: 4px 0 4px 16px; margin: -8px 0 28px; font-family: "Space Grotesk", sans-serif; font-size: 18px; color: var(--text); }
+
+
+    /* Company */
+    .company { max-width: 760px; }
+    .company p { color: var(--muted); margin-bottom: 16px; font-size: 17px; }
+
+    /* Contact */
+    .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+    .contact-grid .card a.link { color: var(--accent); font-weight: 600; display: inline-block; margin-top: 14px; overflow-wrap: anywhere; }
+    .contact-grid .card a.link:hover { text-decoration: underline; }
+
+    /* Footer */
+    footer { border-top: 1px solid var(--border); padding: 40px 0; color: var(--muted); font-size: 14px; }
+    footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; align-items: center; }
+    footer nav { display: flex; gap: 20px; flex-wrap: wrap; }
+    footer a:hover { color: var(--text); }
+
+    @media (max-width: 900px) {
+      .hero .wrap, .product { grid-template-columns: 1fr; gap: 40px; }
+      .hero { padding: 72px 0; }
+      .hero-card { padding: 24px; }
+      .hero-card img { max-width: 200px; }
+      section { padding: 72px 0; }
+      .nav-links {
+        display: none; position: absolute; top: 68px; left: 0; right: 0; flex-direction: column; align-items: flex-start;
+        gap: 0; background: var(--bg); border-bottom: 1px solid var(--border); padding: 8px 24px 16px;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 12px 0; width: 100%; }
+      .menu-btn { display: block; }
+      .nav-cta { display: none; }
+    }
+    @media (max-width: 520px) {
+      .wrap { padding: 0 16px; }
+      .facts { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
-<body class="bg-black text-white font-sans">
+<body>
 
-<header class="relative bg-black py-6">
-    <div class="container mx-auto text-center">
-        <img src="logo.jpg" alt="SmashByte Logo" class="w-64 h-64 mx-auto mb-4">
-        <nav class="mt-4">
-            <a href="#home" class="text-white hover:text-cyan-400 mx-4">Home</a>
-            <a href="#games" class="text-white hover:text-cyan-400 mx-4">Games</a>
-            <a href="#about" class="text-white hover:text-cyan-400 mx-4">About Us</a>
-            <a href="#careers" class="text-white hover:text-cyan-400 mx-4">Careers</a>
-            <a href="#contact" class="text-white hover:text-cyan-400 mx-4">Contact</a>
-        </nav>
+  <header class="nav">
+    <div class="wrap">
+      <a href="#top" class="brand"><img src="logo.jpg" alt="">SmashByte</a>
+      <nav class="nav-links" id="nav-links">
+        <a href="#studio" data-i18n="nav.studio">Studio</a>
+        <a href="#alaria">Alaria</a>
+        <a href="#capabilities" data-i18n="nav.capabilities">What we do</a>
+        <a href="#company" data-i18n="nav.company">Company</a>
+        <a href="#contact" data-i18n="nav.contact">Contact</a>
+      </nav>
+      <div class="nav-right">
+        <div class="lang" role="group" aria-label="Language">
+          <button type="button" data-lang="en" aria-pressed="true">EN</button>
+          <button type="button" data-lang="pt" aria-pressed="false">PT</button>
+        </div>
+        <a href="#contact" class="btn btn-primary btn-sm nav-cta" data-i18n="nav.cta">Get in touch</a>
+        <button type="button" class="menu-btn" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">☰</button>
+      </div>
     </div>
-</header>
+  </header>
 
-<section id="home" class="relative py-12 text-center bg-cover bg-center">
-    <div class="absolute inset-0 bg-black bg-opacity-70"></div>
-    <div class="relative z-10">
-        <h2 class="text-2xl font-bold mb-4">Welcome to SmashByte</h2>
-        <p>We craft immersive MMORPG experiences for players around the world.</p>
+  <main id="top">
+    <section class="hero" id="studio">
+      <div class="wrap">
+        <div>
+          <span class="eyebrow" data-i18n="hero.eyebrow">Independent game studio · Brazil</span>
+          <h1 data-i18n-html="hero.title">We build and operate <em>online worlds</em>.</h1>
+          <p class="lead" data-i18n="hero.lead">SmashByte is a game studio from Brazil. We design, build and run online multiplayer games, including the servers they run on. Our first game, Alaria Online, launched on September 18, 2026.</p>
+          <div class="hero-ctas">
+            <a href="#alaria" class="btn btn-primary" data-i18n="hero.cta1">Meet Alaria</a>
+            <a href="#contact" class="btn btn-ghost" data-i18n="hero.cta2">Business inquiries</a>
+          </div>
+        </div>
+        <div class="hero-card">
+          <img src="alaria_logo.webp" alt="Alaria logo" width="512" height="512">
+          <span class="status" data-i18n="status.live">Live now</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="alaria">
+      <div class="wrap product">
+        <div class="product-visual">
+          <img src="alaria_art.webp" alt="Alaria Online artwork: a hooded mage holding a staff" width="720" height="720" loading="lazy">
+        </div>
+        <div>
+          <span class="eyebrow" data-i18n="product.eyebrow">Our first title</span>
+          <h3>Alaria</h3>
+          <p data-i18n="product.desc">Alaria Online is an old-school fantasy MMORPG that we plan to keep running for years. It keeps the danger and exploration of classic online RPGs and adds guilds, contracts, player housing and an economy driven by the players themselves. The in-game store helps pay for development. It does not sell power.</p>
+          <blockquote class="quote" data-i18n="product.quote">"Power is not bought. It is built."</blockquote>
+          <dl class="facts">
+            <div><dt data-i18n="facts.status">Status</dt><dd data-i18n="facts.statusVal">Live since Sep 18, 2026</dd></div>
+            <div><dt data-i18n="facts.genre">Genre</dt><dd data-i18n="facts.genreVal">Old-school MMORPG</dd></div>
+            <div><dt data-i18n="facts.platform">Platform</dt><dd data-i18n="facts.platformVal">Windows PC + web portal</dd></div>
+            <div><dt data-i18n="facts.langs">Languages</dt><dd>EN · ES · PT-BR</dd></div>
+          </dl>
+          <a href="https://www.alaria.com.br" target="_blank" rel="noopener" class="btn btn-primary" data-i18n="product.cta">Visit alaria.com.br ↗</a>
+          <div class="socials">
+            <a href="https://discord.gg/vvD5pQwB7F" target="_blank" rel="noopener" aria-label="Discord">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3l-.6 1.3a18.4 18.4 0 0 0-5.6 0L8.6 3a19.7 19.7 0 0 0-4.9 1.5C.6 9.1-.3 13.6.1 18.1a19.9 19.9 0 0 0 6 3l1.3-2a12.9 12.9 0 0 1-2-1l.5-.4a14.2 14.2 0 0 0 12.2 0l.5.4c-.6.4-1.3.7-2 1l1.3 2a19.8 19.8 0 0 0 6-3c.5-5.2-.9-9.7-3.6-13.7ZM8 15.3c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Zm8 0c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Z"/></svg>
+            </a>
+            <a href="https://www.instagram.com/alariaonline" target="_blank" rel="noopener" aria-label="Instagram">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            </a>
+            <a href="https://www.twitch.tv/alariaonline" target="_blank" rel="noopener" aria-label="Twitch">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.3 2 3 5.4V20h5v3h2.8l3-3H18l5-5V2H4.3Zm16.9 12.1-3 3h-5l-3 3v-3H6V3.8h15.2v10.3ZM17.3 7.2v5.3h-1.8V7.2h1.8Zm-4.8 0v5.3h-1.8V7.2h1.8Z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="capabilities">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow" data-i18n="cap.eyebrow">What we do</span>
+          <h2 data-i18n="cap.title">We make the game, and we keep it running</h2>
+          <p data-i18n="cap.lead">The people who write the code are the same people who run the servers and ship updates after launch.</p>
+        </div>
+        <div class="grid">
+          <article class="card">
+            <div class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></svg></div>
+            <h3 data-i18n="cap.1.t">Game development</h3>
+            <p data-i18n="cap.1.d">Game design, client and server programming, art and content for online multiplayer games.</p>
+          </article>
+          <article class="card">
+            <div class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="7" rx="2"/><rect x="2" y="14" width="20" height="7" rx="2"/><path d="M6 6.5h.01M6 17.5h.01"/></svg></div>
+            <h3 data-i18n="cap.2.t">Server infrastructure</h3>
+            <p data-i18n="cap.2.d">We run our own game servers, databases and backend services in the cloud, with monitoring, alerts and backups.</p>
+          </article>
+          <article class="card">
+            <div class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg></div>
+            <h3 data-i18n="cap.3.t">Live operations</h3>
+            <p data-i18n="cap.3.d">After launch we keep shipping updates and events, balance the game, moderate the community and handle incidents.</p>
+          </article>
+          <article class="card">
+            <div class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg></div>
+            <h3 data-i18n="cap.4.t">Community & support</h3>
+            <p data-i18n="cap.4.d">Players reach our team through support tickets. The community meets on Discord, Instagram and Twitch.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="company">
+      <div class="wrap company">
+        <div>
+          <span class="eyebrow" data-i18n="co.eyebrow">Company</span>
+          <h2 style="font-size: clamp(28px, 4vw, 40px); margin-bottom: 20px;" data-i18n="co.title">A registered Brazilian company</h2>
+          <p data-i18n="co.p1">SmashByte is a legally registered company in Brazil, focused on developing and publishing online games for Brazilian and international audiences. We process player data in compliance with the Brazilian General Data Protection Law (LGPD, Law 13.709/2018).</p>
+          <p data-i18n="co.p2">We work with infrastructure, payment and distribution partners. For partnerships, vendor questions or compliance requests, write to the business address below.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow" data-i18n="ct.eyebrow">Contact</span>
+          <h2 data-i18n="ct.title">Get in touch</h2>
+        </div>
+        <div class="contact-grid">
+          <div class="card">
+            <h3 data-i18n="ct.1.t">Business & partnerships</h3>
+            <p data-i18n="ct.1.d">Infrastructure, publishing, investment, vendors and compliance.</p>
+            <a class="link" href="mailto:support@smashbyte.com.br">support@smashbyte.com.br</a>
+          </div>
+          <div class="card">
+            <h3 data-i18n="ct.2.t">Player support</h3>
+            <p data-i18n="ct.2.d">Account, payment or in-game issues with Alaria are handled by our team through support tickets on the game website.</p>
+            <a class="link" href="https://www.alaria.com.br/support" target="_blank" rel="noopener" data-i18n="ct.2.l">Open a support ticket ↗</a>
+          </div>
+          <div class="card">
+            <h3 data-i18n="ct.3.t">Careers</h3>
+            <p data-i18n="ct.3.d">We have no open positions right now. You can still send us your portfolio.</p>
+            <a class="link" href="mailto:support@smashbyte.com.br?subject=Careers">support@smashbyte.com.br</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div>&copy; <span id="year">2026</span> SmashByte. <span data-i18n="ft.rights">All rights reserved.</span></div>
+      <nav>
+        <a href="#alaria">Alaria</a>
+        <a href="#company" data-i18n="nav.company">Company</a>
+        <a href="mailto:support@smashbyte.com.br">support@smashbyte.com.br</a>
+      </nav>
     </div>
-</section>
+  </footer>
 
-<section id="games" class="py-12 text-center bg-gray-900">
-    <h2 class="text-2xl font-bold mb-4">Our Games</h2>
-    <p><a href="https://alaria.com.br"><img src="alaria_logo.png" alt="SmashByte Logo" class="w-64 h-64 mx-auto mb-4"></a></p>
-</section>
+  <script>
+    const PT = {
+      "nav.studio": "Estúdio",
+      "nav.capabilities": "O que fazemos",
+      "nav.company": "Empresa",
+      "nav.contact": "Contato",
+      "nav.cta": "Fale conosco",
+      "hero.eyebrow": "Estúdio de games independente · Brasil",
+      "hero.title": "Criamos e operamos <em>mundos online</em>.",
+      "hero.lead": "A SmashByte é um estúdio de games brasileiro. Criamos e operamos jogos online multiplayer, incluindo os servidores onde eles rodam. Nosso primeiro jogo, Alaria Online, foi lançado em 18 de setembro de 2026.",
+      "hero.cta1": "Conheça Alaria",
+      "hero.cta2": "Contato comercial",
+      "status.live": "No ar",
+      "product.eyebrow": "Nosso primeiro título",
+      "product.desc": "Alaria Online é um MMORPG old-school de fantasia que pretendemos manter no ar por muitos anos. Ele mantém o perigo e a exploração dos RPGs online clássicos e acrescenta guildas, contratos, casas de jogadores e uma economia movida pelos próprios jogadores. A loja do jogo ajuda a pagar o desenvolvimento. Ela não vende poder.",
+      "product.quote": "\"Poder não se compra. Se constrói.\"",
+      "facts.status": "Status",
+      "facts.statusVal": "No ar desde 18/09/2026",
+      "facts.genre": "Gênero",
+      "facts.genreVal": "MMORPG old-school",
+      "facts.platform": "Plataforma",
+      "facts.platformVal": "PC Windows + portal web",
+      "facts.langs": "Idiomas",
+      "product.cta": "Acessar alaria.com.br ↗",
+      "cap.eyebrow": "O que fazemos",
+      "cap.title": "Fazemos o jogo e o mantemos no ar",
+      "cap.lead": "Quem escreve o código é a mesma equipe que cuida dos servidores e lança as atualizações depois do lançamento.",
+      "cap.1.t": "Desenvolvimento de jogos",
+      "cap.1.d": "Game design, programação de cliente e servidor, arte e conteúdo para jogos online multiplayer.",
+      "cap.2.t": "Infraestrutura de servidores",
+      "cap.2.d": "Operamos nossos próprios servidores de jogo, bancos de dados e serviços de backend na nuvem, com monitoramento, alertas e backups.",
+      "cap.3.t": "Live operations",
+      "cap.3.d": "Depois do lançamento seguimos com atualizações e eventos, balanceamos o jogo, moderamos a comunidade e resolvemos incidentes.",
+      "cap.4.t": "Comunidade e suporte",
+      "cap.4.d": "Os jogadores falam com a equipe por tickets de suporte. A comunidade se encontra no Discord, Instagram e Twitch.",
+      "co.eyebrow": "Empresa",
+      "co.title": "Uma empresa brasileira registrada",
+      "co.p1": "A SmashByte é uma empresa legalmente constituída no Brasil, focada no desenvolvimento e publicação de jogos online para o público brasileiro e internacional. Tratamos os dados dos jogadores em conformidade com a Lei Geral de Proteção de Dados (LGPD, Lei 13.709/2018).",
+      "co.p2": "Trabalhamos com parceiros de infraestrutura, pagamentos e distribuição. Para parcerias, dúvidas de fornecedores ou pedidos de compliance, escreva para o e-mail comercial abaixo.",
+      "ct.eyebrow": "Contato",
+      "ct.title": "Fale conosco",
+      "ct.1.t": "Negócios e parcerias",
+      "ct.1.d": "Infraestrutura, publicação, investimento, fornecedores e compliance.",
+      "ct.2.t": "Suporte ao jogador",
+      "ct.2.d": "Problemas de conta, pagamento ou dentro do jogo Alaria são atendidos pela nossa equipe via tickets de suporte no site do jogo.",
+      "ct.2.l": "Abrir um ticket de suporte ↗",
+      "ct.3.t": "Carreiras",
+      "ct.3.d": "Não temos vagas abertas no momento. Se quiser, envie seu portfólio mesmo assim.",
+      "ft.rights": "Todos os direitos reservados."
+    };
 
-<section id="about" class="py-12 text-center bg-gray-800">
-    <h2 class="text-2xl font-bold mb-4">About Us</h2>
-    <p>At SmashByte, our mission is to bring engaging MMORPGs to life through innovation and passion.</p>
-</section>
+    const EN = {};
+    document.querySelectorAll("[data-i18n]").forEach(el => { EN[el.dataset.i18n] = el.textContent; });
+    document.querySelectorAll("[data-i18n-html]").forEach(el => { EN[el.dataset.i18nHtml] = el.innerHTML; });
 
-<section id="careers" class="py-12 text-center bg-gray-900">
-    <h2 class="text-2xl font-bold mb-4">Join Our Team</h2>
-    <p>We’re always looking for talented individuals to help us create the next big adventure. Check our openings!</p>
-    <div class="overflow-x-auto mt-6">
-        <table class="table-auto border-collapse border border-gray-700 w-full text-left">
-            <thead>
-                <tr class="bg-gray-800">
-                    <th class="border border-gray-700 px-4 py-2">Position</th>
-                    <th class="border border-gray-700 px-4 py-2">Team</th>
-                    <th class="border border-gray-700 px-4 py-2">Summary</th>
-                </tr>
-            </thead>
-            <!-- <tbody>
-                <tr class="bg-gray-700">
-                    <td class="border border-gray-700 px-4 py-2">Game Developer</td>
-                    <td class="border border-gray-700 px-4 py-2">Development</td>
-                    <td class="border border-gray-700 px-4 py-2">Responsible for coding and implementing game mechanics.</td>
-                </tr>
-                <tr class="bg-gray-800">
-                    <td class="border border-gray-700 px-4 py-2">Pixel Artist</td>
-                    <td class="border border-gray-700 px-4 py-2">Art</td>
-                    <td class="border border-gray-700 px-4 py-2">Creates pixel art models and textures for game environments.</td>
-                </tr>
-            </tbody> -->
-        </table>
-    </div>
-</section>
+    function setLang(lang) {
+      const dict = lang === "pt" ? PT : EN;
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const v = dict[el.dataset.i18n]; if (v != null) el.textContent = v;
+      });
+      document.querySelectorAll("[data-i18n-html]").forEach(el => {
+        const v = dict[el.dataset.i18nHtml]; if (v != null) el.innerHTML = v;
+      });
+      document.documentElement.lang = lang === "pt" ? "pt-BR" : "en";
+      document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang === lang));
+      try { localStorage.setItem("lang", lang); } catch (e) {}
+    }
 
-<section id="contact" class="py-12 text-center bg-gray-800">
-    <h2 class="text-2xl font-bold mb-4">Contact Us</h2>
-    <p>Have questions? Reach out to us anytime!</p>
-</section>
+    document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => setLang(b.dataset.lang)));
 
-<footer class="bg-black py-6 text-center">
-    <p class="mb-4">Follow us on social media:</p>
-    <div class="flex justify-center space-x-4 text-2xl">
-        <a href="https://discord.gg/vvD5pQwB7F" class="text-white hover:text-cyan-400">
-            <i class="fab fa-discord"></i>
-        </a>
-        <a href="https://www.instagram.com/alariaonline" class="text-white hover:text-cyan-400">
-            <i class="fab fa-instagram"></i>
-        </a>
-        <a href="https://www.twitch.tv/alariaonline" class="text-white hover:text-cyan-400">
-            <i class="fab fa-twitch"></i>
-        </a>
-        <!-- <a href="#" class="text-white hover:text-cyan-400">
-            <i class="fab fa-twitter"></i>
-        </a> -->
-    </div>
-    <p class="mt-4">&copy; 2025 SmashByte. All rights reserved.</p>
-</footer>
+    let initial = "en";
+    try { initial = localStorage.getItem("lang") || ((navigator.language || "").toLowerCase().startsWith("pt") ? "pt" : "en"); } catch (e) {}
+    if (initial === "pt") setLang("pt");
+
+    const menuBtn = document.querySelector(".menu-btn");
+    const links = document.getElementById("nav-links");
+    menuBtn.addEventListener("click", () => {
+      const open = links.classList.toggle("open");
+      menuBtn.setAttribute("aria-expanded", open);
+    });
+    links.querySelectorAll("a").forEach(a => a.addEventListener("click", () => {
+      links.classList.remove("open"); menuBtn.setAttribute("aria-expanded", "false");
+    }));
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
